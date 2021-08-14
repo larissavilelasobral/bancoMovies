@@ -3,7 +3,11 @@ const Estudio = require('../models/estudio')
 
 const getAll = async (req, res) => {
   const estudios = await Estudio.find()
-  res.json(estudios)
+  try {
+    res.status(201).json(estudios)
+  }catch {
+    res.status(500).json({message: 'estudios não encontrados tente novamente'})
+  }
 }
 
 const createStudio = async (req, res) => {
@@ -42,6 +46,15 @@ const updateStudio =async (req,res) => {
   )  
 }
 
+const nomeStudio = async (req, res) => {
+  const nome = await Estudio.find({nome: req.body.estudio});
+  try {
+    res.status(201).json(nome)
+  }catch {
+    res.status(404).json({message: 'estudios não encontrados tente novamente'})
+  }
+}
+
 const deleteStudio = async (req, res) => {
   const estudioId = req.params.id
 
@@ -69,5 +82,6 @@ module.exports = {
   getAll,
   createStudio,
   updateStudio,
-  deleteStudio
+  deleteStudio,
+  nomeStudio
 }

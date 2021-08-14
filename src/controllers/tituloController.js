@@ -9,6 +9,8 @@ const getAll = async (req, res) => {
   res.status(200).json(titulos)
 };
 
+// em construção 
+
 const createTitulo = async (req, res) => {
   const titulo = new Titulo({
     _id: new mongoose.Types.ObjectId(),
@@ -32,54 +34,52 @@ const createTitulo = async (req, res) => {
 };
 
 // buscando titulo pelo nome
-
-// const getTituloByName = (req, res) => {
-//   const requestNome = req.params.nome
-//   console.log(requestNome)
-//   Titulo.find({nome: requestNome}, (err, tituloFound) => {
-//     console.log("titulo encontrado pelo nome")
-//     if (err) {
-//       res.status(500).send({message: err.message})
-//     } else {
-//       if (tituloFound) {
-//         res.status(200).send(tituloFound.toJSON())
-//       } else {
-//         res.status(204).send()
-//       }
-//     }
-//   })
-// };
+const getTituloByName = (req, res) => {
+  const requestNome = req.params.nome
+  Titulo.find({nome: requestNome}, (err, tituloFound) => {
+    if (err) {
+      res.status(500).send({message: err.message})
+    } else {
+      if (tituloFound) {
+        res.status(200).send(tituloFound.toJSON())
+      } else {
+        res.status(204).send()
+      }
+    }
+  })
+};
 
 // deletar um titulo pelo id
-
-// const deleteTitulo = (req, res) => {
-//   Titulo.findById(id, function (err, tituloFound) {
-//     if (err) {
-//       res.status(500).send({message: err.message})
-//     } else {
-//       if (tituloFound) {
-//         // deletar apenas um registro
-//         Titulo.deleteOne(id, function(err) {
-//           if (err) {
-//             res.status(500).send({
-//               message: err.message,
-//               status: "FAIL"
-//             })
-//           } else {
-//             res.status(200).send({
-//               message: "titulo removido com sucesso",
-//               status: "SUCESSO"
-//             })
-//           }
-//         })
-//       } else {
-//         res.status(404).send({message: "não ha titulo para ser deletado"})
-//       }
-//     }
-//   })
-// };
+const deleteTitulo = (req, res) => {
+  Titulo.findById(id, function (err, tituloFound) {
+    if (err) {
+      res.status(500).send({message: err.message})
+    } else {
+      if (tituloFound) {
+        // deletar apenas um registro
+        Titulo.deleteOne(id, function(err) {
+          if (err) {
+            res.status(500).send({
+              message: err.message,
+              status: "FAIL"
+            })
+          } else {
+            res.status(200).send({
+              message: "titulo removido com sucesso",
+              status: "SUCESSO"
+            })
+          }
+        })
+      } else {
+        res.status(404).send({message: "não ha titulo para ser deletado"})
+      }
+    }
+  })
+};
 
 module.exports = {
   getAll,
   createTitulo,
+  getTituloByName,
+  deleteTitulo,
 }

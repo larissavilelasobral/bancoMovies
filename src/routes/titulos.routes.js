@@ -10,7 +10,7 @@ router.get('/', controller.getAll)
 router.post('/', controller.createTitulo)
 
 // buscar titulos pelo nome
-// router.get('/nome', controller.getTituloByName)
+router.get('/nome', controller.getTituloByName)
 
 //listar um titulo/get/findById
 
